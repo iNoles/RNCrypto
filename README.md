@@ -7,12 +7,13 @@ Find the project requirements here: [Cryptocurrency price listing mobile app](ht
 Built with React Native, Typescript
 
 ## Screenshots and demo
-Screenshots of your app and/or a link to your live demo
+Screenshots of your app and/or a link to your live demo<br />
+<img width="1052" alt="android main" src="https://raw.githubusercontent.com/iNoles/reactnative-crypto/main/screenshot.png">
 
 ## Installation
 Instructions for other developers on how to install and run your code on their local environment.
 
-yarn react-native start 
+yarn react-native start<br />
 yarn react-native run-android or run-ios
 
 ## License
