@@ -17,5 +17,4 @@ yarn react-native start<br />
 yarn react-native run-android or run-ios
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
-Most open source projects use the MIT license. Feel free to choose whichever license you prefer.
+[GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
