@@ -9,38 +9,20 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView, FlatList} from 'react-native';
 import {Crypto} from './crypto';
 import {Appbar, List, Text} from 'react-native-paper';
-import {Style} from 'react-native-paper/lib/typescript/src/components/List/utils';
+import {getCoins} from './api';
+import {ImageProps, PriceProps, getCoinImage, toUSD} from './utils';
 
 function App(): JSX.Element {
   const [coins, setCoins] = useState<Crypto>();
-  const getCoins = async () => {
-    try {
-      const response = await fetch('https://api.coinlore.net/api/tickers/');
-      const json = (await response.json()) as Crypto;
-      setCoins(json);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
-    getCoins();
+    getCoins().then(crypto => setCoins(crypto));
   }, []);
-  const coinToIcons = (coin: string) => {
-    return `https://c1.coinlore.com/img/50x50/${coin.toLowerCase()}.png`;
+
+  const loadListImage = (props: ImageProps, coin: string) => {
+    return <List.Image {...props} source={{uri: getCoinImage(coin)}} />;
   };
 
-  const loadListIcon = (props: {color: string; style: Style}, coin: string) => {
-    return <List.Image {...props} source={{uri: coinToIcons(coin)}} />;
-  };
-
-  function toUSD(price: string) {
-    return `$${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
-  }
-
-  const fetchPrice = (
-    props: {color: string; style?: Style | undefined},
-    price: string,
-  ) => {
+  const fetchPrice = (props: PriceProps, price: string) => {
     return <Text {...props}>{toUSD(price)}</Text>;
   };
 
@@ -56,7 +38,7 @@ function App(): JSX.Element {
           <List.Item
             title={item.name}
             description={item.symbol}
-            left={props => loadListIcon(props, item.nameid)}
+            left={props => loadListImage(props, item.nameid)}
             right={props => fetchPrice(props, item.price_usd)}
           />
         )}
