@@ -6,17 +6,23 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, FlatList} from 'react-native';
-import {Crypto} from './crypto';
+import {FlatList, SafeAreaView, useColorScheme} from 'react-native';
 import {Appbar, List, Text} from 'react-native-paper';
+import {Crypto} from './crypto';
 import {getCoins} from './api';
 import {ImageProps, PriceProps, getCoinImage, toUSD} from './utils';
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   const [coins, setCoins] = useState<Crypto>();
   useEffect(() => {
     getCoins().then(crypto => setCoins(crypto));
   }, []);
+
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? 'white' : 'black',
+  };
 
   const loadListImage = (props: ImageProps, coin: string) => {
     return <List.Image {...props} source={{uri: getCoinImage(coin)}} />;
@@ -27,7 +33,7 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={backgroundStyle}>
       <Appbar.Header mode="center-aligned">
         <Appbar.Content title="Cryptocurrencies" />
       </Appbar.Header>
